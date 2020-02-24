@@ -26,6 +26,7 @@ public class MessageGenerator {
 
 		ConnectionFactory factory = new ConnectionFactory();
 		factory.setHost("localhost");
+		factory.setVirtualHost("/hello");
 		try (Connection connection = factory.newConnection();
 				Channel channel = connection.createChannel()) {
 			channel.queueDeclare("Assignment1", false, false, false, null);
@@ -68,6 +69,44 @@ public class MessageGenerator {
 		recipient.getAddresses().add(address2);
 
 		order.setOrderId("123");
+		order.setRecipient(recipient);
+
+		return order;
+	}
+
+	private Order createSampleOrder2() {
+		Order order = new Order();
+		Recipient recipient = new Recipient();
+		Product product1 = new Product();
+		Product product2 = new Product();
+		BasicProfile basicProfile = new BasicProfile();
+		Address address1 = new Address();
+		Address address2 = new Address();
+
+		basicProfile.setEmail("mehta@gmail.com");
+		basicProfile.setName("Mehta");
+		basicProfile.setPhoneNumber("9876543210");
+
+		address1.setAddressType(Address.AddressType.BILLING);
+		address1.setLine1("A1Line1");
+		address1.setLine2("A1Line2");
+		address1.setCity("Ahmedabad");
+		address1.setState("Gujarat");
+		address1.setCountry("India");
+
+		address2.setAddressType(Address.AddressType.DELIVERY);
+		address2.setLine1("A2Line1");
+		address2.setLine2("A2Line2");
+		address2.setCity("Mumbai");
+		address2.setState("Maharashtra");
+		address2.setCountry("India");
+
+		recipient.setBasicProfile(basicProfile);
+		recipient.setAddresses(new ArrayList<>());
+		recipient.getAddresses().add(address1);
+		recipient.getAddresses().add(address2);
+
+		order.setOrderId("345");
 		order.setRecipient(recipient);
 
 		return order;
